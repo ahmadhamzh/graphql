@@ -1,0 +1,1 @@
+export const coffee = `Coffee(id: ID!) : Coffee`
