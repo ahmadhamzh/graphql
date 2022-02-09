@@ -1,18 +1,21 @@
-import {  gql } from 'apollo-server'
-import { Coffeetype } from './Coffeetype'
-import { coffee } from './args/coffee'
-import { addCoffee } from './args/addCoffee'
-import { updateCoffee } from './args/updateCoffee'
-import { deleteCoffee } from './args/deleteCoffee'
+import { addCoffeeArgs,coffeeArgs, Coffeetype, deleteCoffeeArgs, updateCoffeeArgs } from "../typdefs";
+import { gql } from "apollo-server";
 
 export const typeDefs = gql`
-${Coffeetype}
-type Query{
- Coffees : [Coffee] ,
- ${coffee}
-}
-type Mutation{
- ${addCoffee},
- ${updateCoffee},
- ${deleteCoffee}
-}`
+  ${addCoffeeArgs}
+  ${coffeeArgs}
+  ${Coffeetype}
+  ${deleteCoffeeArgs}
+  ${updateCoffeeArgs}
+
+  type Query {
+    Coffees: [Coffee!]!
+    Coffee(args: coffeeArgs!): Coffee
+  }
+
+  type Mutation {
+    addCoffee(args: addCoffeeArgs!): Coffee!
+    deleteCoffee(args: deleteCoffeeArgs!): Boolean!
+    updateCoffee(args: updateCoffeeArgs!): Coffee!
+  }
+`

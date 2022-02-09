@@ -1,21 +1,21 @@
-import { ApolloServer, ServerInfo } from 'apollo-server'
-import {sequelize} from './models/index'
-import { typeDefs } from './Coffee/graphql/typdefs/typdefs'
-import { resolvers } from './Coffee/graphql/resolver/resolver'
-import { Coffeeservices } from './Coffee/services/controller'
+import { ApolloServer, ServerInfo } from "apollo-server";
+import { context } from "./Coffee/services";
+import { resolvers } from "./Coffee/graphql/resolver";
+import { sequelize } from "./models";
+import { typeDefs } from "./Coffee/graphql/typdefs";
 
 const server = new ApolloServer({
-  typeDefs,
+  context,
   resolvers,
-  context : ()=>{ hnsdkjs:new Coffeeservices() }
-})
- function start(){
+  typeDefs,
+});
+
+function start() {
   server.listen().then(({ url }: ServerInfo) => {
     console.log(`listning to ${url}`);
-  })
+  });
 }
 
-sequelize.sync().then(()=>{
-  start()
-})
-
+sequelize.sync({ force: true }).then(() => {
+  start();
+});
